@@ -14,23 +14,32 @@ purple = (255, 0, 255)
 mode = "Automatic"
 frame = None
 
+def convert_color_name(tuple_str):
+    match str(tuple_str):
+        case "(255, 0, 0)": return "red"
+        case "(0, 255, 0)": return "green"
+        case "(0, 0, 255)": return "blue"
+        case "(255, 255, 0)": return "yellow"
+        case "(255, 0, 255)": return "purple"
+    return str(tuple_str)
+
 def set_mode_label(text):
     global frame
     if frame is None:
         return
-    frame.mode_label.SetLabel(text)
+    frame.mode_label.SetLabel("Mode: " + convert_color_name(text))
 
 def set_autocolor_label(text):
     global frame
     if frame is None:
         return
-    frame.autocolor_label.SetLabel(text)
+    frame.autocolor_label.SetLabel("Autocolor:" + convert_color_name(text))
 
 def set_color_label(text):
     global frame
     if frame is None:
         return
-    frame.color_label.SetLabel(text)
+    frame.color_label.SetLabel("Color: " + convert_color_name(text))
 
 class ColorSingleton:
     color = green
@@ -49,14 +58,14 @@ class ColorSingleton:
 
     def set_automatic_color(self, new_color):
         global mode
-        set_autocolor_label("Autocolor: " + str(new_color))
+        set_autocolor_label(str(new_color))
         print("Auto color set to", new_color)
         self.auto_color = new_color
         if mode == "Automatic":
             self.set_color(new_color)
 
     def set_color(self, new_color):
-        set_color_label("Color: " + str(new_color))
+        set_color_label(str(new_color))
         if new_color == "Off":
             light.off()
         else:
@@ -76,7 +85,7 @@ class ColorSingleton:
     def set_mode(self, new_mode):
         global mode
         mode = new_mode
-        set_mode_label("Mode: " + new_mode)
+        set_mode_label(new_mode)
         if mode == "Off":
             light.off()
             return
@@ -150,13 +159,13 @@ class MyFrame(wx.Frame):
         panel = wx.Panel(self)
         vbox = wx.BoxSizer(wx.VERTICAL)
 
-        self.mode_label = wx.StaticText(panel, label="Mode: " + str(mode), size=(300, 25))
+        self.mode_label = wx.StaticText(panel, label="Mode: " + convert_color_name(mode), size=(300, 25))
         vbox.Add(self.mode_label, flag=wx.EXPAND | wx.ALL, border=10)
 
-        self.color_label = wx.StaticText(panel, label="Color: " + str(color.get_color()), size=(300, 25))
+        self.color_label = wx.StaticText(panel, label="Color: " + convert_color_name(color.get_color()), size=(300, 25))
         vbox.Add(self.color_label, flag=wx.EXPAND | wx.ALL, border=10)
 
-        self.autocolor_label = wx.StaticText(panel, label="AutoColor: " + str(color.get_autocolor()), size=(300, 25))
+        self.autocolor_label = wx.StaticText(panel, label="AutoColor: " + convert_color_name(color.get_autocolor()), size=(300, 25))
         vbox.Add(self.autocolor_label, flag=wx.EXPAND | wx.ALL, border=10)
 
         # Dropdown (Choice)
