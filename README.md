@@ -1,6 +1,9 @@
 # Busylight UI
 
 ## Summary
+
+![ui.png](docs%2Fimg%2Fui.png)
+
 UI for the Kuando Busylight. Built for my Omega on Mac but probably works fine with other combinations.
 
 * Supports automatic switching from Green to Red when a Microsoft Teams meeting is active. 
