@@ -49,7 +49,7 @@ class Controller:
                 print(f"Refreshing")
                 self.model.refresh()
             self.update_view()
-            print("[/Refresh] - Sleeping")
+            print("[/Refresh] - Waiting 30 seconds")
             await asyncio.sleep(30)
 
     def run_background_tasks(self):
